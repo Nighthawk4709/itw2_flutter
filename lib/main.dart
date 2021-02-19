@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-  final _saved = <WordPair>{};
+  final _saved = Set<WordPair>();
   final _biggerFont = TextStyle(fontSize: 18.0);
 
   Widget _buildSuggestions() {
@@ -135,8 +135,7 @@ class _RandomWordsState extends State<RandomWords> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (counter == 4) {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            nextPage(_saved);
           } else {
             showDialog(
                 context: context,
@@ -144,10 +143,11 @@ class _RandomWordsState extends State<RandomWords> {
                   return Container(
                     width: 300,
                     child: AlertDialog(
-                      title: Text("You are required to select 4 tabs"),
+                      title: Text("WARNING !!!"),
+                      content: Text("Exactly 4 names should be selected..."),
                       actions: <Widget>[
                         FlatButton(
-                          child: Text('HIDE'),
+                          child: Text('okay'),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
@@ -161,6 +161,18 @@ class _RandomWordsState extends State<RandomWords> {
       ),
       body: _buildSuggestions(),
     );
+  }
+
+  void nextPage(Set<WordPair> savedWords) {
+    if (savedWords.length == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyHomePage(
+                  savedWords: savedWords,
+                )),
+      );
+    }
   }
 
   var counter = 0;
