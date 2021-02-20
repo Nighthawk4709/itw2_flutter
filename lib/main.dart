@@ -108,27 +108,7 @@ class _RandomWordsState extends State<RandomWords> {
               icon: Icon(Icons.list),
               onPressed: () {
                 //print(counter);
-                if (counter != 4) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: 300,
-                          child: AlertDialog(
-                            title: Text("You are required to select 4 tabs"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('HIDE'),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                            ],
-                            backgroundColor: Colors.blueGrey,
-                          ),
-                        );
-                      });
-                } else {
-                  _pushSaved();
-                }
+                _pushSaved();
               }), // ye button alert dialog box ke liye hai
         ],
       ),
